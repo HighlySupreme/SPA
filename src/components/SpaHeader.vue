@@ -1,7 +1,7 @@
 <template>
     <div class="spa-header">
         <div class="logo">
-            <q-icon name="mdi-account-cowboy-hat-outline" size="lg" class="spa-text-white"/>
+            <q-icon name="mdi-account-cowboy-hat-outline" size="lg" class="spa-text-light"/>
         </div>
         <div class="menu">
             <router-link v-for="item in menuItems" :key="item.path" :to="item.path" class="menu-link">
