@@ -1,11 +1,23 @@
 import {RouteConfig} from 'vue-router';
 
+const MainLayout = () => import('layouts/MainLayout.vue');
+const UserList = () => import('pages/UserList.vue')
+const PostList = () => import('pages/PostList.vue')
+
+
 const routes: RouteConfig[] = [
     {
         path: '/',
-        component: () => import('layouts/MainLayout.vue'),
+        component: MainLayout,
         children: [
-            {path: '', component: () => import('pages/Index.vue')}
+            {
+                path: '/users',
+                component: UserList,
+            },
+            {
+                path: '/posts',
+                component: PostList,
+            }
         ]
     },
 

@@ -28,13 +28,14 @@ module.exports = configure(function (/* ctx */) {
 
         // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
         css: [
-            'app.css'
+            'app.css',
+            'custom.scss'
         ],
 
         // https://github.com/quasarframework/quasar/tree/dev/extras
         extras: [
             // 'ionicons-v4',
-            // 'mdi-v5',
+            'mdi-v7',
             // 'fontawesome-v6',
             // 'eva-icons',
             // 'themify',
