@@ -1,5 +1,5 @@
 <template>
-    <q-page class="q-pa-lg">
+    <q-page>
         <div class="welcome-content">
             <h1>Welcome to the Home Page</h1>
             <p>
