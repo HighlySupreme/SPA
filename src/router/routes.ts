@@ -4,6 +4,7 @@ const MainLayout = () => import('layouts/MainLayout.vue');
 const HomePage = () => import('pages/HomePage.vue');
 const UserList = () => import('pages/UserList.vue')
 const PostList = () => import('pages/PostList.vue')
+const LogIn = () => import('pages/LogIn.vue')
 
 
 const routes: RouteConfig[] = [
@@ -22,6 +23,10 @@ const routes: RouteConfig[] = [
             {
                 path: '/posts',
                 component: PostList,
+            },
+            {
+                path: '/log-in',
+                component: LogIn,
             }
         ]
     },
