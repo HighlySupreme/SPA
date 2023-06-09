@@ -62,12 +62,10 @@
 
 <script lang="ts">
 
-import PostDetails from "components/Modals/PostDetails.vue";
 import {defineComponent} from "vue";
 import {RestService} from "src/services/rest.service";
 
 export default defineComponent({
-    components: {PostDetails},
     data() {
         return {
             posts: [] as Post[],
