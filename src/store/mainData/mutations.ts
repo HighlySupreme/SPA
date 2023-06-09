@@ -12,6 +12,14 @@ const mutations: MutationTree<State> = {
     setUsername(state, data) {
         state.username = data
         saveToStorage('username', data);
+    },
+
+    setPosts(state, data) {
+        state.posts = data
+    },
+
+    setUsers(state, data) {
+        state.users = data
     }
 };
 

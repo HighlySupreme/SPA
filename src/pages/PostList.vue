@@ -18,7 +18,7 @@
                     </div>
                     <div class="row">
                         <div class="col-2 post-written-by">
-                            <p>Written by - </p>
+                            <p>Written by - {{ getAuthorName(post) }} </p>
                         </div>
                         <div class="col-10 post-actions spa-text-light justify-end" v-if="isLoggedIn">
                             <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(post.id)"/>
@@ -88,6 +88,11 @@ export default defineComponent({
         this.getPosts();
     },
     methods: {
+        getAuthorName(post: Post) {
+            const user = this.$store.getters.getUserById(post.userId);
+            return user ? user.name : '';
+        },
+
         getPostModalTitle() {
             if (this.isEdit) return 'Edit post'
             else if (this.isCreate) return 'Create post'
@@ -152,13 +157,7 @@ export default defineComponent({
         },
 
         async getPosts() {
-            this.$q.loading.show()
-            try {
-                this.posts = await RestService.getPosts();
-                this.$q.loading.hide()
-            } catch (error) {
-                console.error('Failed to fetch posts:', error);
-            }
+            this.posts = await this.$store.dispatch('fetchPosts');
         },
     },
 });

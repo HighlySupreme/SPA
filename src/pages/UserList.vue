@@ -104,6 +104,7 @@ export default defineComponent({
             this.$q.loading.show()
             try {
                 this.users = await RestService.getUsers();
+                await this.$store.commit('setUsers', this.users);
                 this.$q.loading.hide()
             } catch (error) {
                 console.error('Failed to fetch users:', error);

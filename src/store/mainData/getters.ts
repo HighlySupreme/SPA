@@ -8,6 +8,12 @@ const getters: GetterTree<State, any> = {
     getUsername: (state) => {
         return state.username;
     },
+    getUsers: (state) => {
+        return state.users
+    },
+    getUserById: (state) => (id: number) => {
+        return state.users.find(user => user.id === id);
+    },
 };
 
 export default getters;
