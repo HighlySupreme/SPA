@@ -102,13 +102,8 @@ export default defineComponent({
     methods: {
         async getUsers() {
             this.$q.loading.show()
-            try {
-                this.users = await RestService.getUsers();
-                await this.$store.commit('setUsers', this.users);
-                this.$q.loading.hide()
-            } catch (error) {
-                console.error('Failed to fetch users:', error);
-            }
+            this.users = await this.$store.dispatch('fetchUsers');
+            this.$q.loading.hide()
         },
     },
 });

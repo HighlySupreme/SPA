@@ -157,7 +157,9 @@ export default defineComponent({
         },
 
         async getPosts() {
+            this.$q.loading.show()
             this.posts = await this.$store.dispatch('fetchPosts');
+            this.$q.loading.hide()
         },
     },
 });

@@ -12,13 +12,17 @@ const actions: ActionTree<State, any> = {
         commit('setUsername', '');
     },
     async fetchUsers({ state, commit }) {
-        if (state.users && state.users.length > 0) return
-
-        const users = await RestService.getUsers();
-        commit('setUsers', users);
-        return users
+        if (state.users && state.users.length > 0) return state.users
+        try {
+            const users = await RestService.getUsers();
+            commit('setUsers', users);
+            return users
+        } catch (error) {
+            console.log('Failed to fetch users:', error)
+        }
     },
-    async fetchPosts({ dispatch, commit }) {
+    async fetchPosts({ state, dispatch, commit }) {
+        if (state.posts && state.posts.length > 0) return state.posts
         try {
             await dispatch('fetchUsers');
             const posts = await RestService.getPosts();
