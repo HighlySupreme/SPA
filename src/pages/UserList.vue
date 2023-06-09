@@ -30,21 +30,6 @@
 import {defineComponent} from 'vue';
 import {RestService} from "src/services/rest.service";
 
-interface User {
-    id: number;
-    username: string;
-    email: string;
-    name: string;
-    address: {
-        street: string;
-        city: string;
-        zipcode: string;
-    };
-    company: {
-        name: string;
-    };
-}
-
 const columns = [
     {
         name: 'username',
@@ -112,13 +97,14 @@ export default defineComponent({
         };
     },
     mounted() {
-        this.fetchUsers();
+        this.getUsers();
     },
     methods: {
-        async fetchUsers() {
+        async getUsers() {
+            this.$q.loading.show()
             try {
                 this.users = await RestService.getUsers();
-
+                this.$q.loading.hide()
             } catch (error) {
                 console.error('Failed to fetch users:', error);
             }
