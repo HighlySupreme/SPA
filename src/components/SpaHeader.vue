@@ -1,11 +1,11 @@
 <template>
     <div class="spa-header">
-        <q-btn size="lg" dense flat icon="menu" @click="drawerState = !drawerState" v-if="isMobile" color="secondary" />
+        <q-btn size="lg" dense flat icon="menu" @click="drawerState = !drawerState" v-if="isMobile()" color="secondary" />
         <q-drawer v-model="drawerState"
                   color="secondary"
                   side="left"
                   class="drawer" content-class="spa-bg-dark"
-                  v-if="isMobile">
+                  v-if="isMobile()">
             <q-list dense class="spa-drawer-list">
                 <q-btn icon="mdi-menu" color="secondary"
                        dense flat size="lg"
