@@ -1,7 +1,7 @@
 <template>
     <q-page>
         <div class="posts">
-            <div class="post-add justify-end">
+            <div class="post-add justify-end" v-if="isLoggedIn">
                 <q-btn icon="mdi-plus" flat class="spa-text-light" @click="addPost"/>
             </div>
             <div>
@@ -17,7 +17,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 post-actions spa-text-light justify-end">
+                        <div class="col-2 post-written-by">
+                            <p>Written by - </p>
+                        </div>
+                        <div class="col-10 post-actions spa-text-light justify-end" v-if="isLoggedIn">
                             <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(post.id)"/>
                             <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(post.id)"/>
                             <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePost(post.id)" flat/>
@@ -64,8 +67,13 @@
 
 import {defineComponent} from "vue";
 import {RestService} from "src/services/rest.service";
+import {mapGetters} from "vuex";
 
 export default defineComponent({
+    computed: {
+        ...mapGetters(['isLoggedIn']),
+    },
+
     data() {
         return {
             posts: [] as Post[],
@@ -202,6 +210,17 @@ export default defineComponent({
     padding: 10px;
     display: flex;
     justify-content: flex-end;
+}
+
+.post-written-by {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.post-written-by p{
+    margin-bottom: 0;
 }
 
 
