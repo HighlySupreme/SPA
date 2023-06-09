@@ -17,10 +17,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2 post-written-by">
+                        <div class="col-12 post-written-by">
                             <p>Written by - {{ getAuthorName(post) }} </p>
                         </div>
-                        <div class="col-10 post-actions spa-text-light justify-end" v-if="isLoggedIn">
+                        <div class="col-12 post-actions spa-text-light justify-end" v-if="isLoggedIn">
                             <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(post.id)"/>
                             <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(post.id)"/>
                             <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePost(post.id)" flat/>
