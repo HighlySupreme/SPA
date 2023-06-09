@@ -21,21 +21,13 @@
                                 <div class="full-width">
                                     <p class="spa-content-text">{{ props.row.body }}</p>
                                 </div>
-                                <div class="full-width">
+                                <div class="full-width post-written-by">
                                     <p>Written by - {{ getAuthorName(props.row) }} </p>
                                 </div>
-                                <div class="full-width spa-post-actions spa-text-light justify-end">
+                                <div class="full-width spa-post-actions spa-text-light justify-end" v-if="isLoggedIn">
                                     <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(props.row.id)"/>
                                     <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(props.row.id)"/>
                                     <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePostPressed(props.row)" flat/>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 post-written-by">
-
-                                    </div>
-                                    <div class="col-12 " v-if="isLoggedIn">
-
-                                    </div>
                                 </div>
                             </q-card>
                         </div>
@@ -182,6 +174,12 @@ export default defineComponent({
             try {
                 await RestService.updatePost(this.post)
                 this.togglePostModal()
+                Notify.create({
+                    color: 'secondary',
+                    textColor: 'white',
+                    message: 'Successfully saved post',
+                    position: 'bottom-right'
+                })
                 await this.getPosts()
             } catch (error) {
                 console.log('Failed to save post', error)
