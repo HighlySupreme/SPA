@@ -5,28 +5,41 @@
                 <q-btn icon="mdi-plus" flat class="spa-text-light" @click="addPost"/>
             </div>
             <div>
-                <q-card v-for="post in posts" :key="post.id" class="post">
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="spa-title">{{ post.title }}</p>
+                <q-table grid
+                         :data="posts"
+                         :columns="columns"
+                         colu
+                         :rows-per-page-options="[3, 5, 10, 15, 30, 50]"
+                         hide-header>
+
+                    <template v-slot:item="props">
+                        <div class="q-pa-xs col-12 grid-style-transition">
+                            <q-card class="post">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="spa-title">{{ props.row.title }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="spa-content-text">{{ props.row.body }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 post-written-by">
+                                        <p>Written by - {{ getAuthorName(props.row) }} </p>
+                                    </div>
+                                    <div class="col-12 post-actions spa-text-light justify-end" v-if="isLoggedIn">
+                                        <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(props.row.id)"/>
+                                        <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(props.row.id)"/>
+                                        <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePost(props.row.id)" flat/>
+                                    </div>
+                                </div>
+                            </q-card>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="spa-content-text">{{ post.body }}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 post-written-by">
-                            <p>Written by - {{ getAuthorName(post) }} </p>
-                        </div>
-                        <div class="col-12 post-actions spa-text-light justify-end" v-if="isLoggedIn">
-                            <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(post.id)"/>
-                            <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(post.id)"/>
-                            <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePost(post.id)" flat/>
-                        </div>
-                    </div>
-                </q-card>
+                    </template>
+
+                </q-table>
             </div>
         </div>
 
@@ -69,6 +82,12 @@ import {defineComponent} from "vue";
 import {RestService} from "src/services/rest.service";
 import {mapGetters} from "vuex";
 
+const columns = [
+        { name: 'title', field: 'title' },
+        { name: 'body', field: 'body' },
+        { name: 'actions', field: 'actions' }
+];
+
 export default defineComponent({
     computed: {
         ...mapGetters(['isLoggedIn']),
@@ -81,7 +100,8 @@ export default defineComponent({
             postModal: false,
             postId: 0,
             isEdit: false,
-            isCreate: false
+            isCreate: false,
+            columns: columns,
         };
     },
     mounted() {
