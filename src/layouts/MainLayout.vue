@@ -1,6 +1,6 @@
 <template>
     <q-layout>
-        <SpaHeader />
+        <spa-header />
 
         <q-page-container>
             <router-view />
@@ -17,9 +17,6 @@ import SpaHeader from "components/SpaHeader.vue";
 export default defineComponent({
     name: 'MainLayout',
     components: {SpaHeader},
-    setup() {
-
-    }
 });
 
 </script>

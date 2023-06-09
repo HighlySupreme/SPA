@@ -1,7 +1,7 @@
 <template>
     <q-page>
-        <div class="welcome-content">
-            <h1>Welcome to the Home Page</h1>
+        <div class="spa-welcome-content">
+            <h1 class="spa-text-light">Welcome to the Home Page</h1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam mattis ante, vel blandit
                 odio ultricies ac. Quisque vitae varius purus. Nulla eu faucibus dolor. In hac habitasse
@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 
-.welcome-content {
+.spa-welcome-content {
     text-align: center;
 }
 

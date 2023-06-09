@@ -1,6 +1,6 @@
 <template>
-    <q-page class="login-page">
-        <div class="login-container">
+    <q-page class="spa-login-page">
+        <div class="spa-login-container">
             <div class="row">
                 <div class="col-12">
                     <q-input v-model="username" label="Username" color="secondary"/>
@@ -8,8 +8,8 @@
                 <div class="col-12">
                     <q-input type="password" v-model="password" label="Password" color="secondary" />
                 </div>
-                <div class="col-12 login-button">
-                    <q-btn flat type="submit" label="Login" class="login-button spa-text-light" @click="login"/>
+                <div class="col-12 spa-login-button">
+                    <q-btn flat type="submit" label="Login" class="spa-login-button spa-text-light" @click="login"/>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
 <script>
 import { defineComponent } from 'vue';
 import * as LoginService from "src/services/login.service";
-import Vue from "vue";
+import {Notify} from "quasar";
 export default defineComponent({
     data() {
         return {
@@ -32,7 +32,7 @@ export default defineComponent({
             try {
                 const result = await LoginService.login(this.username, this.password)
                 if (result) {
-                    Vue.prototype.$q.notify({
+                    Notify.create({
                         color: 'secondary',
                         textColor: 'white',
                         message: 'Login successful!',
@@ -41,7 +41,7 @@ export default defineComponent({
                     await this.$router.push('/');
                 } else {
                     console.log("Wrong login credentials")
-                    Vue.prototype.$q.notify({
+                    Notify.create({
                         color: 'red',
                         textColor: 'white',
                         message: 'Wrong credentials!',
@@ -60,21 +60,21 @@ export default defineComponent({
 
 <style scoped>
 
-.login-page {
+.spa-login-page {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.login-container {
+.spa-login-container {
     padding: 20px;
     border-radius: 8px;
     height: 200px;
     width: 350px;
 }
 
-.login-button {
+.spa-login-button {
     margin-top: 10px;
     text-align: center;
 }

@@ -11,8 +11,7 @@ const actions: ActionTree<State, any> = {
         commit('setIsLoggedIn', false);
         commit('setUsername', '');
     },
-    async fetchUsers({ state, commit }) {
-        if (state.users && state.users.length > 0) return state.users
+    async fetchUsers({ commit }) {
         try {
             const users = await RestService.getUsers();
             commit('setUsers', users);
@@ -21,8 +20,7 @@ const actions: ActionTree<State, any> = {
             console.log('Failed to fetch users:', error)
         }
     },
-    async fetchPosts({ state, dispatch, commit }) {
-        if (state.posts && state.posts.length > 0) return state.posts
+    async fetchPosts({ dispatch, commit }) {
         try {
             await dispatch('fetchUsers');
             const posts = await RestService.getPosts();

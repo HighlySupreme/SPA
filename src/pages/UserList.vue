@@ -6,7 +6,7 @@
                 :data="users"
                 :columns="columns"
                 row-key="id"
-                class="user-table"
+                class="spa-user-table"
             >
                 <template v-slot:body-cell-street="props">
                     <td>{{ props.row.address.street }}</td>
@@ -28,7 +28,6 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {RestService} from "src/services/rest.service";
 
 const columns = [
     {

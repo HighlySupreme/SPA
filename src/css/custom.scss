@@ -8,6 +8,8 @@
 
 .q-page-container {
     background-color: #FDFFFC;
+    max-width: 1400px;
+    margin: auto;
     transition: 0.2s;
     padding-bottom: 0 !important;
 }
@@ -31,4 +33,10 @@ p.spa-title {
 
 p.spa-content-text {
     font-size: 14px;
+}
+
+@media (max-width: 768px) {
+     h1 {
+        font-size: 26px;
+    }
 }

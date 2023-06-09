@@ -1,7 +1,7 @@
 <template>
     <q-page>
-        <div class="posts">
-            <div class="post-add justify-end" v-if="isLoggedIn">
+        <div class="spa-posts">
+            <div class="spa-post-add justify-end" v-if="isLoggedIn">
                 <q-btn icon="mdi-plus" flat class="spa-text-light" @click="addPost"/>
             </div>
             <div>
@@ -14,25 +14,27 @@
 
                     <template v-slot:item="props">
                         <div class="q-pa-xs col-12 grid-style-transition">
-                            <q-card class="post">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="spa-title">{{ props.row.title }}</p>
-                                    </div>
+                            <q-card class="spa-post">
+                                <div class="full-width">
+                                    <p class="spa-title">{{ props.row.title }}</p>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="spa-content-text">{{ props.row.body }}</p>
-                                    </div>
+                                <div class="full-width">
+                                    <p class="spa-content-text">{{ props.row.body }}</p>
+                                </div>
+                                <div class="full-width">
+                                    <p>Written by - {{ getAuthorName(props.row) }} </p>
+                                </div>
+                                <div class="full-width spa-post-actions spa-text-light justify-end">
+                                    <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(props.row.id)"/>
+                                    <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(props.row.id)"/>
+                                    <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePostPressed(props.row)" flat/>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 post-written-by">
-                                        <p>Written by - {{ getAuthorName(props.row) }} </p>
+
                                     </div>
-                                    <div class="col-12 post-actions spa-text-light justify-end" v-if="isLoggedIn">
-                                        <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(props.row.id)"/>
-                                        <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(props.row.id)"/>
-                                        <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePost(props.row.id)" flat/>
+                                    <div class="col-12 " v-if="isLoggedIn">
+
                                     </div>
                                 </div>
                             </q-card>
@@ -44,7 +46,7 @@
         </div>
 
         <q-dialog v-model="postModal">
-            <q-card class="post-details">
+            <q-card class="spa-post-details">
                 <q-card-section>
                     <p class="spa-title q-ma-none">{{ getPostModalTitle() }}</p>
                 </q-card-section>
@@ -73,6 +75,23 @@
             </q-card>
         </q-dialog>
 
+        <q-dialog v-model="deleteModal">
+            <q-card class="spa-delete-modal">
+                <q-card-section>
+                    <p class="spa-title q-ma-none">Are you sure you want to delete?</p>
+                </q-card-section>
+                <q-separator class="q-pa-none"/>
+                <q-card-section>
+                    <p class="q-ma-none">Delete post - {{ post.title }}</p>
+                </q-card-section>
+
+                <div class="q-card-actions-bottom">
+                    <q-btn label="Close" @click="toggleDeleteModal" flat class="spa-text-light" />
+                    <q-btn label="Delete" @click="deletePost" flat class="spa-text-light" />
+                </div>
+            </q-card>
+        </q-dialog>
+
     </q-page>
 </template>
 
@@ -81,6 +100,7 @@
 import {defineComponent} from "vue";
 import {RestService} from "src/services/rest.service";
 import {mapGetters} from "vuex";
+import {Notify} from "quasar";
 
 const columns = [
         { name: 'title', field: 'title' },
@@ -102,6 +122,7 @@ export default defineComponent({
             isEdit: false,
             isCreate: false,
             columns: columns,
+            deleteModal: false
         };
     },
     mounted() {
@@ -170,7 +191,14 @@ export default defineComponent({
         async deletePost() {
             if (!this.post) return
             try {
-                 await RestService.deletePost(this.post.id)
+                await RestService.deletePost(this.post.id)
+                this.toggleDeleteModal()
+                Notify.create({
+                    color: 'secondary',
+                    textColor: 'white',
+                    message: 'Successfully deleted',
+                    position: 'bottom-right'
+                })
             } catch (error) {
                 console.log('Failed to delete post', error)
             }
@@ -181,23 +209,32 @@ export default defineComponent({
             this.posts = await this.$store.dispatch('fetchPosts');
             this.$q.loading.hide()
         },
+
+        deletePostPressed(post: Post) {
+            this.post = post
+            this.toggleDeleteModal()
+        },
+
+        toggleDeleteModal() {
+            this.deleteModal = !this.deleteModal
+        }
     },
 });
 </script>
 
 <style scoped>
 
-.post {
+.spa-post {
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.post-actions {
+.spa-post-actions {
     display: flex;
     margin-top: 10px;
 }
 
-.post-details {
+.spa-post-details {
     max-width: 90vw !important;
     max-height: 70vh !important;
     width: 90vw !important;
@@ -206,7 +243,7 @@ export default defineComponent({
     flex-direction: column;
 }
 
-.post-add {
+.spa-post-add {
     display: flex;
     margin-bottom: 20px;
 }

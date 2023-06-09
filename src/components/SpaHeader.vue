@@ -1,7 +1,7 @@
 <template>
     <div class="spa-header">
-        <div class="menu">
-            <router-link v-for="item in menuItems" :key="item.path" :to="item.path" class="menu-link">
+        <div class="spa-main-menu">
+            <router-link v-for="item in menuItems" :key="item.path" :to="item.path" class="spa-menu-link">
                 {{ item.name }}
             </router-link>
         </div>
@@ -18,6 +18,7 @@ import { RouteConfig } from 'vue-router';
 import {userMenuItems} from 'layouts/menu/user';
 import { mapGetters, mapActions } from 'vuex';
 import Vue, {defineComponent} from "vue";
+import { Notify } from 'quasar';
 
 export default defineComponent({
     data() {
@@ -39,7 +40,7 @@ export default defineComponent({
                     throw err;
                 }
             });
-            Vue.prototype.$q.notify({
+            Notify.create({
                 color: 'secondary',
                 textColor: 'white',
                 message: 'Log out successful!',
@@ -68,18 +69,18 @@ export default defineComponent({
     font-size: 20px;
 }
 
-.menu-link {
+.spa-menu-link {
     position: relative;
     color: #fdfffc;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.menu-link:hover {
+.spa-menu-link:hover {
     color: #2ec4b6;
 }
 
-.menu-link::after {
+.spa-menu-link::after {
     content: "";
     position: absolute;
     bottom: -3px;
@@ -91,11 +92,11 @@ export default defineComponent({
     transition: transform 0.3s ease;
 }
 
-.menu-link:hover::after {
+.spa-menu-link:hover::after {
     transform: scaleX(1);
 }
 
-.menu {
+.spa-main-menu {
     display: flex;
     gap: 2rem;
     flex: 1;
