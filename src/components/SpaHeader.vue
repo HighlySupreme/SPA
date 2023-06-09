@@ -6,7 +6,7 @@
             </router-link>
         </div>
         <div class="login-button">
-            <q-btn v-if="!isLogin" @click="onLogIn" class="login-btn">Log In</q-btn>
+            <q-btn v-if="!isLoggedIn" @click="onLogIn" class="login-btn">Log In</q-btn>
             <q-btn v-else @click="onLogOut" class="logout-btn">Log Out</q-btn>
         </div>
     </div>
@@ -20,32 +20,37 @@ import { mapGetters, mapActions } from 'vuex';
 import Vue, {defineComponent} from "vue";
 
 export default defineComponent({
-    computed: {
-        ...mapGetters(['isLogin']),
-    },
-
     data() {
         return {
             menuItems: userMenuItems as RouteConfig[],
         }
     },
+    computed: {
+        ...mapGetters(['isLoggedIn']),
+    },
 
     methods: {
-        ...mapActions(['setLogout']),
+        ...mapActions(['logOut']),
         onLogOut() {
-            this.setLogout()
-            this.$router.push('/');
+            this.logOut();
+            this.$router.push('/').catch(err => {
+                // ignore the vuex err regarding duplicate navigation
+                if (err.name !== 'NavigationDuplicated') {
+                    throw err;
+                }
+            });
             Vue.prototype.$q.notify({
                 color: 'green',
                 textColor: 'white',
                 message: 'Log out successful!',
                 position: 'bottom-right'
             });
+            this.isLoggedIn = false
         },
 
         onLogIn() {
             this.$router.push("/log-in")
-        }
+        },
 
     }
 })

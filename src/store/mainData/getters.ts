@@ -2,8 +2,8 @@ import { GetterTree } from 'vuex';
 import { State } from './state';
 
 const getters: GetterTree<State, any> = {
-    isLogin: (state) => {
-        return state.isLogin;
+    isLoggedIn: (state) => {
+        return state.isLoggedIn;
     },
     getUsername: (state) => {
         return state.username;

@@ -1,12 +1,13 @@
+import { loadFromStorage } from 'src/helper/localStorage';
 export interface State {
-    isLogin: boolean;
+    isLoggedIn: boolean;
     username: string;
     users: User[];
 }
 
 const state: State = {
-    isLogin: false,
-    username: '',
+    isLoggedIn: loadFromStorage('isLoggedIn') || false,
+    username: loadFromStorage('username') || '',
     users: []
 };
 

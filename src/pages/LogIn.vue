@@ -18,7 +18,6 @@
 
 <script>
 import { defineComponent } from 'vue';
-import store from 'src/store'
 import * as LoginService from "src/services/login.service";
 import Vue from "vue";
 export default defineComponent({
@@ -33,8 +32,6 @@ export default defineComponent({
             try {
                 const result = await LoginService.login(this.username, this.password)
                 if (result) {
-                    store.commit('setIsLogin', true);
-                    store.commit('setUsername', this.username);
                     Vue.prototype.$q.notify({
                         color: 'green',
                         textColor: 'white',
