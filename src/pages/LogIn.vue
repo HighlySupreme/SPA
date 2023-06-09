@@ -33,7 +33,7 @@ export default defineComponent({
                 const result = await LoginService.login(this.username, this.password)
                 if (result) {
                     Vue.prototype.$q.notify({
-                        color: 'green',
+                        color: 'secondary',
                         textColor: 'white',
                         message: 'Login successful!',
                         position: 'bottom-right'

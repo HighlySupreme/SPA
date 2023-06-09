@@ -40,7 +40,7 @@ export default defineComponent({
                 }
             });
             Vue.prototype.$q.notify({
-                color: 'green',
+                color: 'secondary',
                 textColor: 'white',
                 message: 'Log out successful!',
                 position: 'bottom-right'
