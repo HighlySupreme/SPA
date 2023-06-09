@@ -1,11 +1,30 @@
 <template>
     <div class="spa-header">
-        <div class="spa-main-menu">
+        <q-btn size="lg" dense flat icon="menu" @click="drawerState = !drawerState" v-if="isMobile" color="secondary" />
+        <q-drawer v-model="drawerState"
+                  color="secondary"
+                  side="left"
+                  class="drawer" content-class="spa-bg-dark"
+                  v-if="isMobile">
+            <q-list dense class="spa-drawer-list">
+                <q-btn icon="mdi-menu" color="secondary"
+                       dense flat size="lg"
+                       class="spa-drawer-menu-btn q-mb-lg" @click="toggleMenu"/>
+                <q-item v-for="item in menuItems" :key="item.path" class="spa-drawer-item">
+                    <router-link :to="item.path" class="spa-menu-link">
+                        <q-item-section class="drawer-item">
+                            {{ item.name }}
+                        </q-item-section>
+                    </router-link>
+                </q-item>
+            </q-list>
+        </q-drawer>
+        <div class="spa-main-menu" v-else>
             <router-link v-for="item in menuItems" :key="item.path" :to="item.path" class="spa-menu-link">
                 {{ item.name }}
             </router-link>
         </div>
-        <div class="login-button">
+        <div class="login-button" :class="{'login-button-mobile': this.$q.screen.xs}">
             <q-btn v-if="!isLoggedIn" @click="onLogIn" class="login-btn">Log In</q-btn>
             <q-btn v-else @click="onLogOut" class="logout-btn">Log Out</q-btn>
         </div>
@@ -24,6 +43,7 @@ export default defineComponent({
     data() {
         return {
             menuItems: userMenuItems as RouteConfig[],
+            drawerState: false
         }
     },
     computed: {
@@ -53,6 +73,14 @@ export default defineComponent({
             this.$router.push("/log-in")
         },
 
+        toggleMenu() {
+            this.drawerState = !this.drawerState;
+        },
+
+        isMobile() {
+            return this.$q.screen.xs || this.$q.screen.md
+        }
+
     }
 })
 </script>
@@ -67,6 +95,7 @@ export default defineComponent({
     padding: 1rem;
     background-color: #011627;
     font-size: 20px;
+    height: 90px;
 }
 
 .spa-menu-link {
@@ -112,7 +141,28 @@ export default defineComponent({
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
+    margin-right: 10px;
 }
+
+.login-button-mobile {
+    position: absolute;
+    right: 0;
+}
+
+.spa-header .spa-drawer-list {
+    width: 100%;
+    padding: 20px 10px;
+}
+
+.spa-header .spa-drawer-list .spa-drawer-menu-btn {
+    padding: 0 5px;
+}
+
+.spa-header .spa-drawer-list > .spa-drawer-item {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
 
 
 </style>
