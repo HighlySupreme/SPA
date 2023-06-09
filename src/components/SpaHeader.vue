@@ -6,10 +6,8 @@
             </router-link>
         </div>
         <div class="login-button">
-            <router-link class="login-btn" v-if="!loggedIn" to="/log-in">
-                Log In
-            </router-link>
-            <q-btn v-else @click="logout" class="logout-btn">Log Out</q-btn>
+            <q-btn v-if="!isLogin" @click="onLogIn" class="login-btn">Log In</q-btn>
+            <q-btn v-else @click="onLogOut" class="logout-btn">Log Out</q-btn>
         </div>
     </div>
 </template>
@@ -18,8 +16,14 @@
 
 import { RouteConfig } from 'vue-router';
 import {userMenuItems} from 'layouts/menu/user';
+import { mapGetters, mapActions } from 'vuex';
+import Vue, {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
+    computed: {
+        ...mapGetters(['isLogin']),
+    },
+
     data() {
         return {
             menuItems: userMenuItems as RouteConfig[],
@@ -27,8 +31,24 @@ export default {
     },
 
     methods: {
+        ...mapActions(['setLogout']),
+        onLogOut() {
+            this.setLogout()
+            this.$router.push('/');
+            Vue.prototype.$q.notify({
+                color: 'green',
+                textColor: 'white',
+                message: 'Log out successful!',
+                position: 'bottom-right'
+            });
+        },
+
+        onLogIn() {
+            this.$router.push("/log-in")
+        }
+
     }
-}
+})
 </script>
 
 
@@ -76,11 +96,6 @@ export default {
     flex: 1;
 }
 
-.login-button {
-    display: flex;
-    gap: 1rem;
-    padding: 0.5rem;
-}
 
 .login-btn,
 .logout-btn {

@@ -1,19 +1,17 @@
 <template>
     <q-page class="login-page">
         <div class="login-container">
-            <form @submit="login" class="login-form">
-                <div class="row">
-                    <div class="col-12">
-                        <q-input v-model="username" label="Username" color="secondary"/>
-                    </div>
-                    <div class="col-12">
-                        <q-input type="password" v-model="password" label="Password" color="secondary"/>
-                    </div>
-                    <div class="col-12 login-button">
-                        <q-btn flat type="submit" label="Login" class="login-button spa-text-light" />
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <q-input v-model="username" label="Username" color="secondary"/>
                 </div>
-            </form>
+                <div class="col-12">
+                    <q-input type="password" v-model="password" label="Password" color="secondary" />
+                </div>
+                <div class="col-12 login-button">
+                    <q-btn flat type="submit" label="Login" class="login-button spa-text-light" @click="login"/>
+                </div>
+            </div>
         </div>
     </q-page>
 </template>
@@ -52,6 +50,8 @@ export default defineComponent({
                         message: 'Wrong credentials!',
                         position: 'bottom-right'
                     });
+                    this.username = ''
+                    this.password = ''
                 }
             } catch (error) {
                 throw new Error('Login failed');
@@ -75,10 +75,6 @@ export default defineComponent({
     border-radius: 8px;
     height: 200px;
     width: 350px;
-}
-
-.login-form {
-    /* Your form styles here */
 }
 
 .login-button {
