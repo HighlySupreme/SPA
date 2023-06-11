@@ -1,3 +1,5 @@
+// Deprecated; now using AXIOS.service for making REST-ful requests
+
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
 export const JsonService = {
