@@ -2,7 +2,11 @@
     <q-page>
         <div class="spa-posts">
             <div class="spa-post-add justify-end" v-if="isLoggedIn">
-                <q-btn icon="mdi-plus" flat class="spa-text-light" @click="addPost"/>
+                <q-btn icon="mdi-plus" flat class="spa-text-light" @click="addPost">
+                    <q-tooltip>
+                        Create post
+                    </q-tooltip>
+                </q-btn>
             </div>
             <div>
                 <q-table grid
@@ -25,9 +29,21 @@
                                     <p>Written by - {{ getAuthorName(props.row) }} </p>
                                 </div>
                                 <div class="full-width spa-post-actions spa-text-light justify-end" v-if="isLoggedIn">
-                                    <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(props.row.id)"/>
-                                    <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(props.row.id)"/>
-                                    <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePostPressed(props.row)" flat/>
+                                    <q-btn icon="mdi-magnify-plus-outline" size="md" flat @click="viewPost(props.row.id)">
+                                        <q-tooltip>
+                                           View post
+                                        </q-tooltip>
+                                    </q-btn>
+                                    <q-btn icon="mdi-pencil-outline" size="md" flat @click="editPost(props.row.id)">
+                                        <q-tooltip>
+                                            Edit post
+                                        </q-tooltip>
+                                    </q-btn>
+                                    <q-btn icon="mdi-trash-can-outline" size="md" @click="deletePostPressed(props.row)" flat>
+                                        <q-tooltip>
+                                            Delete post
+                                        </q-tooltip>
+                                    </q-btn>
                                 </div>
                             </q-card>
                         </div>
